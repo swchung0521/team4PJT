@@ -20,12 +20,12 @@ public class UserMapperTests {
 
     @Test
     public void insertTest(){
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 500; i++) {
             UserVO vo = new UserVO();
             vo.setUserId("testId777"+i);
-            vo.setUserName("테스트길동 테길동"+i);
-            vo.setContent("테스트내용 테내용" + i);
-            vo.setTitle("테스트 제목 테제목"+i);
+            vo.setUserName("테길동"+i);
+            vo.setContent("테내용" + i);
+            vo.setTitle("테제목"+i);
             vo.setUserPassword("1234"+i);
             mapper.insert(vo);
         }

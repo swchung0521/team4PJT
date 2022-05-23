@@ -1,5 +1,6 @@
 package com.green.team4.service.bs;
 
+import com.green.team4.vo.bs.Criteria;
 import com.green.team4.vo.bs.UserVO;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,5 @@ public interface UserService {
     public List<UserVO> getList();
     public void modify(UserVO vo);
     public void delete(Long sid);
+    public List<UserVO> getPageList(Criteria criteria);
 }

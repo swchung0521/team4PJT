@@ -1,5 +1,6 @@
 package com.green.team4.mapper.bs;
 
+import com.green.team4.vo.bs.Criteria;
 import com.green.team4.vo.bs.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +13,6 @@ public interface UserMapper {
     public UserVO readOne(Long uNo);
     public List<UserVO> readList();
     public void delete(Long uNo);
+    public List<UserVO> getPageList(Criteria criteria);
     public int selectUserTotalCount();
 }

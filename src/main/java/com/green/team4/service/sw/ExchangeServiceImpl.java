@@ -1,7 +1,5 @@
 package com.green.team4.service.sw;
 
-import com.green.team4.mapper.sw.ExchangeFilesMapper;
-import com.green.team4.mapper.sw.ExchangeMapper;
 import com.green.team4.vo.sw.ExchangeFilesVO;
 import com.green.team4.vo.sw.ExchangeVO;
 import lombok.RequiredArgsConstructor;

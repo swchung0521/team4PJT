@@ -19,4 +19,5 @@ public class UserVO {
     private Date regDate;
     private Date modDate;
     private boolean delete_state;
+    private Long totalCount; // count(*)
 }

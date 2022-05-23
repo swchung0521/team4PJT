@@ -9,7 +9,7 @@
 
 
     <insert id="insert" parameterType="com.green.team4.vo.bs.UserVO">
-        insert into user_tbl values ( null, #{userId},#{userName},#{userPassword},#{title},#{content},now(),null,null)
+        insert into user_tbl values ( null, #{userId},#{userName},#{userPassword},#{title},#{content},now(),null)
     </insert>
 
     <select id="readOne" parameterType="long" resultType="com.green.team4.vo.bs.UserVO">
@@ -26,13 +26,18 @@
         where uNo= #{uNo}
     </update>
 
-    <update id="delete" parameterType="Long">
-        update user_tbl set delete_state = false where uno = #{uno}
-    </update>
+    <delete id="delete" parameterType="Long">
+        delete from user_tbl where uNo=#{uNo}
+    </delete>
 
     <select id="readList" parameterType="com.green.team4.vo.bs.UserVO" resultType="com.green.team4.vo.bs.UserVO">
-        select uNo, title, content,username, regDate, modDate from user_tbl
+        select uNo, title, content,username, regDate, modDate from user_tbl;
+    </select>
+    <!--    include : sql 조각을 사용할 수 있게 해준다. id로 연결-->
+    <select id="getPageList" parameterType="com.green.team4.vo.bs.Criteria" resultType="com.green.team4.vo.bs.UserVO">
+        select uNo, title, content, userName, regDate, modDate
+        from user_tbl order by uNo desc, regDate desc
+        limit #{page}, #{pageNum}
     </select>
 
 </mapper>
-        <!--    include : sql 조각을 사용할 수 있게 해준다. id로 연결-->

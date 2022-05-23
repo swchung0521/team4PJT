@@ -2,7 +2,7 @@ package com.green.team4.service.JH;
 
 import com.green.team4.mapper.JH.OrderPageMapper;
 import com.green.team4.mapper.JH.ShopMapper;
-import com.green.team4.mapper.sw.MemberInfoMapper;
+import com.green.team4.service.sw.MemberInfoMapper;
 import com.green.team4.vo.JH.DBOrderItemVO;
 import com.green.team4.vo.JH.DBOrderVO;
 import com.green.team4.vo.JH.OrderPageItemVO;

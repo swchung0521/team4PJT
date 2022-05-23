@@ -1,6 +1,6 @@
 package com.green.team4.mapperTests;
 
-import com.green.team4.mapper.sw.ExchangeFilesMapper;
+import com.green.team4.service.sw.ExchangeFilesMapper;
 import com.green.team4.vo.sw.ExchangeFilesVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

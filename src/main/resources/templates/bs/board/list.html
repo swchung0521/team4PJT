@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>리스트</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<body>
+hello list
+<button id="regBtn">게시글 등록</button>
+<div>
+    <p>
+    <table>
+        <tr>
+            <th>NO</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Writer</th>
+            <th>RegDate</th>
+            <th>ModDate</th>
+        </tr>
+        <!-- ${} : EL. Expression Language -->
+        <tr th:each="item : ${items}" >
+            <td th:text="${item.uNo}"></td>
+            <td ><a class="move" th:href="${item.uNo}"><span th:text="${item.title}"></span></a></td>
+            <td th:text="${item.content}"></td>
+            <td th:text="${item.userName}"></td>
+            <td th:text="${#dates.format(item.regDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(item.modDate, 'yyyy-MM-dd')}"></td>
+        </tr>
+    </table>
+    </p>
+</div>
+    <div>
+        <p>
+            <a th:href="${pageMaker.startPage - 1}" id="prev"><button th:if="${pageMaker.prev}" >이전</button></a>
+<!--            th:block 사용시 selector 인식 못함-->
+            <span class="paginate_button" th:each="num: ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+                <a th:href="${num}" th:text="${num}"></a>
+            </span>
+            <a th:href="${pageMaker.endPage + 1}" id="next"><button th:if="${pageMaker.next}" >다음</button></a>
+        </p>
+<!--        현재 페이지, 페이지당 게시글 수를 넘기기 위한 form태그-->
+        <form id="actionForm" action="list" method="get">
+            <input type="hidden" name="page" th:value="${pageMaker.criteria.page}">
+            <input type="hidden" name="pageNum" th:value="${pageMaker.criteria.pageNum}">
+        </form>
+    </div>
+
+
+
+</body>
+<script th:inline="javascript">
+    $(document).ready(function (){
+        let result = '<div th:text="${result}">';
+        checkModal(result);
+        history.replaceState({},null,null);
+        function checkModal(result){
+            if(result==='' || history.state){
+                return ;
+            }
+            if (parseInt(result)>0){
+                $(".modal-body").html(
+                    "게시글 " + parseInt((result) + "번이 등록되었습니다.")
+                )
+            }
+
+            // $("#myModal").modal("show");
+        }
+        $("#regBtn").on("click", function (){
+            // The Window.location 읽기전용 요소는 문서의 위치(url)에 대한 정보가 담긴 Location 객체를 반환한다.
+            self.location = "/bs/board/register";
+        })
+        let actionForm = $("#actionForm")
+
+        // 페이지 이동 : next, prev, displayPage
+        $(".paginate_button a").on("click", function (e){
+            // 페이지가 넘어가지 않게 방지
+            e.preventDefault();
+            // .find() : 어떤 요소의 하위 요소 중 특정 요소를 찾을 때 사용
+            actionForm.find("input[name='page']").val($(this).attr("href"));
+            actionForm.submit();
+        })
+
+        $("#next").on("click", function (e){
+            e.preventDefault();
+            actionForm.find("input[name='page']").val($(this).attr("href"));
+            actionForm.submit();
+        })
+
+        $("#prev").on("click", function (e){
+            e.preventDefault();
+            actionForm.find("input[name='page']").val($(this).attr("href"));
+            actionForm.submit();
+        })
+
+        // 게시글 수정
+
+
+    })
+</script>
+</html>

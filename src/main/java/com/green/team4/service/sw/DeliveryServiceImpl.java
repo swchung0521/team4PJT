@@ -1,6 +1,5 @@
 package com.green.team4.service.sw;
 
-import com.green.team4.mapper.sw.DeliveryMapper;
 import com.green.team4.vo.sw.DeliveryVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

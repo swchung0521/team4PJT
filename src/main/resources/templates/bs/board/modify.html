@@ -13,16 +13,18 @@
     <input th:value="${#dates.format(item.regDate, 'yyyy-MM-dd')}" readonly><br>
     <input th:value="${#dates.format(item.modDate, 'yyyy-MM-dd')}" readonly><br>
     <button type="submit" id="modify">수정</button>
-    <button type="submit" id="delete">삭제</button>
+    <button type="text" id="delete">삭제</button>
 </form>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
     $(document).ready(function (){
-        $('#delete').onclick(function (){
-            console.log("script works")
+        $('#delete').click(function (){
+            // 삭제기능 구현
+            $('#delete').attr('type','submit');
             $('form').attr('action','delete');
+
 
         })
     })

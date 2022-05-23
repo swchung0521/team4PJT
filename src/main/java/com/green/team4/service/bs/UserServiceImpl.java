@@ -1,6 +1,7 @@
 package com.green.team4.service.bs;
 
 import com.green.team4.mapper.bs.UserMapper;
+import com.green.team4.vo.bs.Criteria;
 import com.green.team4.vo.bs.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -38,5 +39,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public void delete(Long sid) {
         mapper.delete(sid);
+    }
+
+    @Override
+    public List<UserVO> getPageList(Criteria criteria) {
+        if (criteria.getPage()<=0){
+            criteria.setPage(1L);
+        }
+        criteria.setPage((criteria.getPage() - 1)* criteria.getPageNum());
+        return mapper.getPageList(criteria);
     }
 }

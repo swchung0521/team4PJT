@@ -23,14 +23,14 @@ public class OrderServiceTests {
 
     @Test
     public void testReadOne(){
-        int ono = 1;
+        String ono = "1";
         OrderVO orderVO = orderService.readOne(ono);
         System.out.println(orderVO);
     }
 
     @Test
     public void testUpdate(){
-        OrderVO orderVO = orderService.readOne(2); // 기존 order 가져오기
+        OrderVO orderVO = orderService.readOne("1"); // 기존 order 가져오기
         orderVO.setPayStatus("결재 완료");
         orderVO.setDeliveryStatus("배송 시작");
         int result = orderService.modify(orderVO);

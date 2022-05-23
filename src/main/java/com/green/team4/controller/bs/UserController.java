@@ -1,6 +1,8 @@
 package com.green.team4.controller.bs;
 
 import com.green.team4.service.bs.UserService;
+import com.green.team4.vo.bs.Criteria;
+import com.green.team4.vo.bs.PageMaker;
 import com.green.team4.vo.bs.UserVO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +11,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/bs/*")
+@RequestMapping("/bs/board/*")
 @Log4j2
 public class UserController {
     @Autowired
     UserService userService;
     @GetMapping("/list")
-    public void list(Model model) {
+    public void list(Model model,Criteria criteria) {
+        PageMaker pageMaker = new PageMaker(criteria, 500);
         log.info("list로 이동....");
-        model.addAttribute("items",userService.getList());
+        log.info("criteria : " + criteria.getPage());
+        log.info("올림값 : " + (int)(Math.ceil((double)(criteria.getPage()+1)/(double)10)));
+        log.info("pageMaker : " + pageMaker.isNext() + pageMaker.isPrev());
+        model.addAttribute("items",userService.getPageList(criteria));
+        model.addAttribute("pageMaker",pageMaker);
+
     }
 
     @GetMapping("/register")
@@ -52,5 +60,4 @@ public class UserController {
         log.info("삭제(수정) 완료");
         return "redirect:list";
     }
-
 }

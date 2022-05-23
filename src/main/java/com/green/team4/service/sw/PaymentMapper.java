@@ -1,4 +1,4 @@
-package com.green.team4.mapper.sw;
+package com.green.team4.service.sw;
 
 import com.green.team4.vo.sw.PaymentVO;
 import org.apache.ibatis.annotations.Mapper;
