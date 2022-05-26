@@ -9,7 +9,7 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserVO {
+public class BoardVO {
     private Long uNo;
     private String userId;
     private String userName;

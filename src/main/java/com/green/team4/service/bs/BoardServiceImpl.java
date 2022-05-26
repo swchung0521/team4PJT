@@ -1,38 +1,38 @@
 package com.green.team4.service.bs;
 
-import com.green.team4.mapper.bs.UserMapper;
+import com.green.team4.mapper.bs.BoardMapper;
 import com.green.team4.vo.bs.Criteria;
-import com.green.team4.vo.bs.UserVO;
+import com.green.team4.vo.bs.BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class UserServiceImpl implements UserService{
+public class BoardServiceImpl implements BoardService {
     @Autowired
-    UserMapper mapper;
+    BoardMapper mapper;
 
 
     @Override
-    public void insert(UserVO vo) {
+    public void insert(BoardVO vo) {
         mapper.insert(vo);
     }
 
     @Override
-    public UserVO getOne(Long sid) {
+    public BoardVO getOne(Long sid) {
 
         return mapper.readOne(sid);
     }
 
     @Override
-    public List<UserVO> getList() {
+    public List<BoardVO> getList() {
 
         return mapper.readList();
     }
 
     @Override
-    public void modify(UserVO vo) {
+    public void modify(BoardVO vo) {
         mapper.modify(vo);
     }
 
@@ -42,11 +42,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserVO> getPageList(Criteria criteria) {
-        if (criteria.getPage()<=0){
-            criteria.setPage(1L);
-        }
+    public List<BoardVO> getPageList(Criteria criteria) {
         criteria.setPage((criteria.getPage() - 1)* criteria.getPageNum());
         return mapper.getPageList(criteria);
+    }
+
+    @Override
+    public int getTotal(Criteria cri) {
+        return mapper.getTotalCount(cri);
     }
 }

@@ -3,53 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>리스트</title>
+    <!-- head fragment -->
+    <th:block th:replace="bs/board/fragments/header.html :: head"></th:block>
+    <link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <body>
-hello list
+<!-- header fragment -->
+<th:block th:replace="bs/board/fragments/header.html :: headerFragment"></th:block>
+
 <button id="regBtn">게시글 등록</button>
-<div>
-    <p>
-    <table>
-        <tr>
-            <th>NO</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Writer</th>
-            <th>RegDate</th>
-            <th>ModDate</th>
-        </tr>
-        <!-- ${} : EL. Expression Language -->
-        <tr th:each="item : ${items}" >
-            <td th:text="${item.uNo}"></td>
-            <td ><a class="move" th:href="${item.uNo}"><span th:text="${item.title}"></span></a></td>
-            <td th:text="${item.content}"></td>
-            <td th:text="${item.userName}"></td>
-            <td th:text="${#dates.format(item.regDate, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(item.modDate, 'yyyy-MM-dd')}"></td>
-        </tr>
-    </table>
-    </p>
+<!-- PAGE SECTION START -->
+<div class="page-section section pt-120 pb-45">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Blog Item -->
+                <div class="blog-item mb-75" th:each="item : ${items}">
+                    <!-- Image -->
+                    <a href="blog-details.html" class="image"><img src="img/blog/3.jpg" alt=""></a>
+                    <!-- Content -->
+                    <div class="content fix">
+                        <!-- uNo-->
+                        <span th:text="${item.uNo}"></span>
+                        <!-- Title -->
+                        <a class="move" th:href="${item.uNo}"><h4 class="title" th:text="${item.title}"></h4></a>
+                        <span th:text="${item.userName}"></span>
+                        <!-- Date -->
+                        <span class="date" th:text="${#dates.format(item.regDate, 'MM-dd')}">
+                        </span>
+                    </div>
+                </div>
+                <p>
+
+                <!-- pagination -->
+                <div class="bs-paging">
+                <!--            th:block 사용시 selector 인식 못함-->
+                    <a th:href="${pageMaker.startPage - 1}" id="prev"><button class="btn" th:if="${pageMaker.prev}" >이전</button></a>
+                    <span class="paginate_button" th:each="num: ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+                        <a th:href="${num}" th:text="${num}"></a>
+                    </span>
+                    <a th:href="${pageMaker.endPage + 1}" id="next"><button class="btn" th:if="${pageMaker.next}" >다음</button></a>
+                </div>
+                <!-- pagination end-->
+                </p>
+                <!-- Search -->
+                <form id="searchForm" action="list" method="get">
+                    <div>
+                        <div>
+                            <select name="searchType" id="searchType">
+                                <option value="title">제목</option>
+                                <option value="title">내용</option>
+                                <option value="title">작성자</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="text" name="keyword" id="keyword">
+                            <button name="btnSearch" id="btnSearch">검색</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Search end-->
+
+            </div>
+        </div>
+    </div>
 </div>
-    <div>
-        <p>
-            <a th:href="${pageMaker.startPage - 1}" id="prev"><button th:if="${pageMaker.prev}" >이전</button></a>
-<!--            th:block 사용시 selector 인식 못함-->
-            <span class="paginate_button" th:each="num: ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-                <a th:href="${num}" th:text="${num}"></a>
-            </span>
-            <a th:href="${pageMaker.endPage + 1}" id="next"><button th:if="${pageMaker.next}" >다음</button></a>
-        </p>
+<!-- PAGE SECTION END -->
 <!--        현재 페이지, 페이지당 게시글 수를 넘기기 위한 form태그-->
+    <div>
+
         <form id="actionForm" action="list" method="get">
-            <input type="hidden" name="page" th:value="${pageMaker.criteria.page}">
+            <input type="hidden" name="page" th:value="${pageMaker.criteria.page/pageMaker.criteria.pageNum+1}">
             <input type="hidden" name="pageNum" th:value="${pageMaker.criteria.pageNum}">
+<!--            <input type="hidden" name="searchType" th:value="${pageMaker.search.searchType}">-->
+<!--            <input type="hidden" name="keyword" th:value="${pageMaker.search.keyword}">-->
         </form>
     </div>
 
 
 
 </body>
+<!-- footer fragment -->
+<th:block th:replace="bs/board/fragments/footer.html :: footerFragment"></th:block>
+
 <script th:inline="javascript">
     $(document).ready(function (){
         let result = '<div th:text="${result}">';
@@ -67,12 +105,14 @@ hello list
 
             // $("#myModal").modal("show");
         }
+        // 게시글 등록
         $("#regBtn").on("click", function (){
             // The Window.location 읽기전용 요소는 문서의 위치(url)에 대한 정보가 담긴 Location 객체를 반환한다.
             self.location = "/bs/board/register";
         })
         let actionForm = $("#actionForm")
 
+        // pagination start
         // 페이지 이동 : next, prev, displayPage
         $(".paginate_button a").on("click", function (e){
             // 페이지가 넘어가지 않게 방지
@@ -94,7 +134,30 @@ hello list
             actionForm.submit();
         })
 
-        // 게시글 수정
+        // 게시글 href 연결, 복잡한 링크를 만들지 않기 위해 form에 uNo정보 담아 전달
+        $(".move").on("click",function (e){
+            e.preventDefault();
+            actionForm.append("<input type='hidden' name='uNo' value='" +
+                $(this).attr("href") +"'>");
+            actionForm.attr("action","/bs/board/read");
+            actionForm.submit();
+        })
+        // pagination end
+        // search start
+        $("#btnSearch").on('click',function (e){
+            e.preventDefault();
+            // pageContext.request.contextPath : 상대경로, 여기선 ${#httpServletRequest.getContextPath()} 사용.
+            // httpServletRequest : url정보를 얻기 위해 여러 함수를 사용할 수 있는 객체.
+            // let url = $('#contextPathHolder').attr('data-contextPath') ?  $('#contextPathHolder').attr('data-contextPath') : '';
+            // url = url + "?searchType=" + $("#searchType").val();
+            // url = url + "&keyword=" + $('#keyword').val();
+            // location.href = url;
+            // console.log(url);
+            // console.log($('#contextPathHolder').attr('data-contextPath'));
+
+        })
+        // search end
+
 
 
     })

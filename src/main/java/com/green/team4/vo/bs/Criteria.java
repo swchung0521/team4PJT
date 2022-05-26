@@ -27,8 +27,5 @@ public class Criteria {
         this.page = page;
         this.pageNum = pageNum;
     }
-    public Long getPageStart(){
-        return (this.page-1)* pageNum;
-    }
 
 }
