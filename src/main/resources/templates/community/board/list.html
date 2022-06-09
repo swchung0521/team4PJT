@@ -29,41 +29,25 @@
     </div>
 </div>
 <!-- page section start -->
-<div class="page-section section pt-120 pb-45">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="mb-100">
-                    <form method="get" action="register" id="registerForm">
-                        <!--  추후 넘어오는 데이터로 수정 -->
-                        <input type="hidden" name="idSec" th:value="${#authentication.name}">
-                        <button type="submit" id="regBtn" style="float: right">게시글 등록</button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
+<div class="page-section section pt-100 pb-45">
     <div class="container" th:each="item : ${items}">
-        <p>
         <div class="row">
-
-            <div class="col-2 mx-auto">
+            <div class="col-lg-1 mt-25 mb-75 mx-auto">
                 <span th:text="${item.bno}" style="float: right"></span>
             </div>
-            <div class="col-8 mx-auto">
-                <div class="blog-item mb-100">
-                    <a class="move" th:href="${item.bno}"><h4 class="title" th:text="${item.title}"></h4></a>
+            <div class="col-lg-8 mx-auto">
+                <div class="blog-item mt-25 mb-75">
+
+                    <a class="move" th:href="${item.bno}"><h4 class="title" th:text="${item.title}" ></h4></a>
                     <span th:text="${item.nonMemberId}" th:if="${item.nickName}==null"></span>
                     <span th:text="${item.nickName}" th:if="${item.nickName}!=null"></span>
                 </div>
+                <hr>
             </div>
-            <div class="col-2 mx-auto">
-                <span class="date" th:text="${#dates.format(item.regDate, 'MM-dd')}"></span>
+            <div class="col-lg-1 mt-25 mb-75 mx-auto">
+                <span class="date" th:text="${#dates.format(item.regDate, 'MM-dd')}" style="float: right"></span>
             </div>
-
         </div>
-        </p>
     </div>
     <div class="container">
         <div class="row">
@@ -81,6 +65,19 @@
         </div>
     </div>
                 <!-- pagination end-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="mb-75 mt-75">
+                    <form method="get" action="register" id="registerForm">
+                        <!--  추후 넘어오는 데이터로 수정 -->
+                        <input type="hidden" name="idSec" th:value="${#authentication.name}">
+                        <button type="submit" id="regBtn" style="float: right">게시글 등록</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
