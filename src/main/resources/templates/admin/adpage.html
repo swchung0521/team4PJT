@@ -47,8 +47,8 @@
           <!-- Menu Image -->
           <div class="product-img">
             <!-- Image -->
-            <a class="image" th:href="@{/mypage/interest/list(mno=${mno})}">
-              <img src="/icons_bootstrap/currency-dollar.svg" height="80" alt="">
+            <a class="image" th:href="@{/admin/product/list(pno=1)}">
+              <img src="/icons_bootstrap/cash.svg" height="80" alt="">
             </a>
           </div>
           <!-- Menu Info -->
@@ -113,6 +113,42 @@
         </div>
       </div>
 
+      <!-- 배송 대기 상품 개수 -->
+      <div class="isotope-item ptable col-xl-3 col-lg-4 col-md-6 col-12 mb-50">
+        <div class="product-item product-item-2 text-center">
+          <!-- Menu Image -->
+          <div class="product-img">
+            <!-- Image -->
+            <a class="image" th:href="@{/admin/order/normalList}">
+              <img src="/icons_bootstrap/truck.svg" height="80" alt="">
+            </a>
+          </div>
+          <!-- Menu Info -->
+          <div class="product-info">
+            <h5 class="title">배송 대기 상품</h5>
+            <p>[[${normalCnt}]]개</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 취소/환불/교환 개수 -->
+      <div class="isotope-item ptable col-xl-3 col-lg-4 col-md-6 col-12 mb-50">
+        <div class="product-item product-item-2 text-center">
+          <!-- Menu Image -->
+          <div class="product-img">
+            <!-- Image -->
+            <a class="image" th:href="@{/admin/order/cancelList}">
+              <img src="/icons_bootstrap/arrow-left-right.svg" height="80" alt="">
+            </a>
+          </div>
+          <!-- Menu Info -->
+          <div class="product-info">
+            <h5 class="title">취소/환불/교환</h5>
+            <p>[[${exchangeCnt}]]개</p>
+          </div>
+        </div>
+      </div>
+
       <!-- 등록된 게시글 개수 -->
       <div class="isotope-item ptable col-xl-3 col-lg-4 col-md-6 col-12 mb-50">
         <div class="product-item product-item-2 text-center">
@@ -131,6 +167,23 @@
         </div>
       </div>
 
+      <!-- 1:1 문의글 개수 -->
+      <div class="isotope-item ptable col-xl-3 col-lg-4 col-md-6 col-12 mb-50">
+        <div class="product-item product-item-2 text-center">
+          <!-- Menu Image -->
+          <div class="product-img">
+            <!-- Image -->
+            <a class="image" th:href="@{/admin/personalQ/listM}">
+              <img src="/icons_bootstrap/customer-service-question-svgrepo-com.svg" height="80" alt="">
+            </a>
+          </div>
+          <!-- Menu Info -->
+          <div class="product-info">
+            <h5 class="title">1:1 문의글 개수</h5>
+            <p>[[${questionCnt}]]개</p>
+          </div>
+        </div>
+      </div>
 
 
     </div>
