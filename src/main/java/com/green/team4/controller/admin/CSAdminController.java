@@ -1,7 +1,11 @@
 package com.green.team4.controller.admin;//package com.green.team4.controller.sw;
 
 import com.github.pagehelper.PageInfo;
+import com.green.team4.service.admin.MailService;
+import com.green.team4.service.mypage.MemberInfoService;
 import com.green.team4.service.mypage.PersonalQService;
+import com.green.team4.vo.admin.MailVO;
+import com.green.team4.vo.mypage.MemberInfoVO;
 import com.green.team4.vo.mypage.PersonalQVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +25,8 @@ import java.time.LocalDateTime;
 public class CSAdminController {
 
     private final PersonalQService personalQService;
-
+    private final MailService mailService;
+    private final MemberInfoService memberInfoService;
 
     @GetMapping("/personalQ/listM") // 1:1문의글 전체 목록 가져오기
     public void pQListAdmin(
@@ -53,6 +58,13 @@ public class CSAdminController {
         personalQVO.setPqReplyTitle(pqReplyTitle); // 답변제목 업데이트
         personalQVO.setPqReplyContent(pqReplyContent); // 답변내용 업데이트
         personalQVO.setPqStatus("답변완료");
+
+        MailVO mailVO = new MailVO();
+        MemberInfoVO memberMail = memberInfoService.getMemberInfo(personalQVO.getMno()); // 회원 정보 조회
+        mailVO.setEmail(memberMail.getEmail());
+        mailVO.setSubject(memberMail.getName() + "님의 문의 내용 답변이 완료되었습니다."); // 메일 제목
+        mailVO.setText("답변 내용: " + pqReplyContent); // 메일 내용
+        mailService.sendMail(mailVO);
 
         log.info("수정될 personalQVO: "+personalQVO);
         personalQService.modify(personalQVO);
