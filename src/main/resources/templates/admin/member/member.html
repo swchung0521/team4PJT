@@ -49,7 +49,9 @@
                             </thead>
                             <tbody>
                             <tr th:each="dto:${list.getList()}">
-                                <td class="pro-remove"><a th:href="@{/admin/member/modify(mno=${dto.mno})}" th:text="${dto.mno}"/></td>
+                                <td class="pro-remove">
+                                    <a th:href="@{/admin/member/modify(mno=${dto.mno})}" th:text="${dto.mno}"/>
+                                </td>
                                 <td class="pro-remove" th:text="${dto.id}"></td>
                                 <td class="pro-remove" th:text="${dto.name}"></td>
                                 <td class="pro-thumbnail" th:text="${dto.address}"></td>

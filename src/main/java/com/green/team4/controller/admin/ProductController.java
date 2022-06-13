@@ -10,6 +10,7 @@ import com.green.team4.mapper.admin.ProductOptMapper;
 import com.green.team4.paging.PagingEntity;
 import com.green.team4.service.mypage.CartService;
 import com.green.team4.service.mypage.InterestService;
+import com.green.team4.service.shop.CategoryService;
 import com.green.team4.vo.admin.SearchVO;
 import com.green.team4.service.admin.PagingService;
 import com.green.team4.service.admin.ProductService;
@@ -58,6 +59,7 @@ public class ProductController {
     private final CartService cartService;
     private final InterestService interestService;
     private final ProductMapper productMapper;
+    private final CategoryService categoryService;
 
     private String makeFolder(){ // 파일 저장 폴더 만들기(탐색기)
         String str = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
@@ -84,8 +86,9 @@ public class ProductController {
     }
 
     @GetMapping("/upload")
-    public void uploadGet(){
+    public void uploadGet(Model model){
         log.info("uploadGet.......");
+        model.addAttribute("categoryList", categoryService.cateList());
     }
     @PostMapping("/upload")
     public String uploadPost(ProductVO vo, Model model,

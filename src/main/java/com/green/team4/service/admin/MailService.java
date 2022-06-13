@@ -26,34 +26,18 @@ public class MailService {
     private final MailMapper mailMapper;
 
     public int sendMail(MailVO vo){
-        //수신 대상을 담을 ArrayList
         ArrayList<String> toUserList = new ArrayList<>();
-
-        //수신 대상 추가
         toUserList.add(vo.getEmail());
-        toUserList.forEach(i-> System.out.println("수신 대상 리스트: "+i));
-
-        //수신 대상 개수
         int toUserSize = toUserList.size();
-        System.out.println("수신 대상 개수: "+toUserSize);
-
-        //SimpleMailMessage (단순 텍스트 구성 메일 메시지 생성할 떄 이용)
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-
-        //수신자 설정
-        simpleMailMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
-        
-        //메일 제목
+        simpleMailMessage.setTo((String[])
+                toUserList.toArray(new String[toUserSize]));
         simpleMailMessage.setSubject(vo.getSubject());
-
-        //메일 내용
         simpleMailMessage.setText(vo.getText());
-
-        //메일 발송
         javaMailSender.send(simpleMailMessage);
-
         return mailMapper.insert(vo);
     }
+
     public List<MailVO> page(int pageNum) {
         PageHelper.startPage(pageNum,10);
         List<MailVO> mailList = mailMapper.getAll();
