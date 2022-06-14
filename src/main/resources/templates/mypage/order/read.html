@@ -81,7 +81,6 @@
                                         </td>
                                         <!-- 리뷰등록 -->
                                         <td class="pro-title" style="font-weight: bold; color: #191c1f">
-
                                             <a th:if="${item.iReviewStatus.equals('미등록') && orderVO.tPayStatus.equals('결제완료')}"
                                                th:href="@{/mypage/order/regReview(mno=${orderVO.mno},ono=${item.ono},oINo=${item.oINo})}">
                                                 <img width="30" height="30" src="/icons_bootstrap/pencil-square.svg">

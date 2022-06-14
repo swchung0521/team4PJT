@@ -101,11 +101,6 @@ public class OrderController {
         log.info("OrderController => exRegister(GET) 실행 => 받은 oINo: "+oINo);
 
         // (1) 기존 주문상품 정보 가져오기
-//        OrderVO orderVO = orderService.readOne(ono); // 주문서 가져오기
-//        List<OrderItemVO> itemList = orderVO.getOrderItemList(); // 주문 상품 List 가져오기
-//        itemList.forEach(i->{ // 신청 대상 아이템 model 등록
-//            if(i.getPno()==pno) model.addAttribute("orderItem",i);
-//        });
         OrderItemVO orderItemVO = orderItemMapper.getOne(oINo); // 신청 대상 주문상품 정보 가져오기
         model.addAttribute("orderItem",orderItemVO);
         model.addAttribute("mno",mno);
